@@ -34,7 +34,6 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-
     public Product addProduct(Product product, BindingResult bindingResult) {
         product.setId(0);
         if (bindingResult.hasErrors()) {
