@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService{
     public Product findProduct(int productId) {
         Optional<Product> result = productRepository.findById(productId);
         if (!result.isPresent()) {
-            throw new BoodschappErrorException("Cannot find customer with id: " + productId, HttpStatus.NOT_FOUND);
+            throw new BoodschappErrorException("Cannot find product with id: " + productId, HttpStatus.NOT_FOUND);
         }
         return result.get();
     }
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService{
     public void deleteProduct(int productId) {
         Optional<Product> result = productRepository.findById(productId);
         if (!result.isPresent()) {
-            throw new BoodschappErrorException("Cannot find customer with id: " + productId, HttpStatus.NOT_FOUND);
+            throw new BoodschappErrorException("Cannot find product with id: " + productId, HttpStatus.NOT_FOUND);
         }
         productRepository.deleteById(productId);
 

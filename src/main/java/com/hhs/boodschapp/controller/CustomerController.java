@@ -10,7 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CustomerController {
@@ -30,9 +32,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> addCustomer(@Valid @RequestBody Customer customer, BindingResult bindingResult) {
         Customer savedCustomer = customerService.addCustomer(customer, bindingResult);
 
-        CustomerResponse response = new CustomerResponse();
-        response.setCustomerId(savedCustomer.getId());
-        response.setStatusMessage("Customer is added");
+        CustomerResponse response = new CustomerResponse("Customer is added", savedCustomer.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -42,19 +42,19 @@ public class CustomerController {
     }
 
 
-//    @PatchMapping("/customers/{customerId}")
-//    public Customer updateCustomer(@PathVariable int customerId, @RequestBody Map<String, String> fields) {
-//        // TODO Add validation to Customer.
-//        return null;
-//    }
+    @PatchMapping("/customers/{customerId}")
+    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable int customerId, @RequestBody Map<String, String> fields) {
+        customerService.updateCustomer(customerId, fields);
+
+        CustomerResponse response = new CustomerResponse("Customer is updated", customerId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @DeleteMapping("/customers/{customerId}")
     public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable int customerId) {
         customerService.deleteCustomer(customerId);
 
-        CustomerResponse response = new CustomerResponse();
-        response.setStatusMessage("Customer is deleted");
-        response.setCustomerId(customerId);
+        CustomerResponse response = new CustomerResponse("Customer is deleted", customerId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
