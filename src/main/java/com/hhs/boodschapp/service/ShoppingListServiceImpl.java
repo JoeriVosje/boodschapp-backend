@@ -4,32 +4,30 @@ import com.hhs.boodschapp.exception.BoodschappErrorException;
 import com.hhs.boodschapp.model.entity.Customer;
 import com.hhs.boodschapp.model.entity.ShoppingList;
 import com.hhs.boodschapp.model.repository.CustomerRepository;
+import com.hhs.boodschapp.model.repository.ShoppingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ShoppingListServiceImpl implements ShoppingListService {
     private CustomerRepository customerRepository;
+    private CustomerService customerService;
+    private ShoppingListRepository shoppingListRepository;
 
     @Autowired
-    public ShoppingListServiceImpl(CustomerRepository customerRepository) {
+    public ShoppingListServiceImpl(CustomerRepository customerRepository, CustomerService customerService, ShoppingListRepository shoppingListRepository) {
         this.customerRepository = customerRepository;
+        this.customerService = customerService;
+        this.shoppingListRepository = shoppingListRepository;
     }
 
     @Override
     public List<ShoppingList> getShoppingLists(int customerId) {
-        Optional<Customer> result = customerRepository.findById(customerId);
-
-        if(!result.isPresent()) {
-            throw new BoodschappErrorException("Cannot find customer with id: " + customerId, HttpStatus.NOT_FOUND);
-        }
-
-        Customer customer = result.get();
+        Customer customer = customerService.findCustomer(customerId);
         List<ShoppingList> shoppingLists = customer.getShoppingLists();
 
         if (shoppingLists.isEmpty()) {
@@ -40,16 +38,12 @@ public class ShoppingListServiceImpl implements ShoppingListService {
     }
 
     @Override
-    public void addShoppingList(int customerId) {
-        Optional<Customer> result = customerRepository.findById(customerId);
-
-        if(!result.isPresent()) {
-            throw new RuntimeException("Customer not found");
-        }
-
-        Customer customer = result.get();
-        ShoppingList shoppingList = new ShoppingList(new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
+    public ShoppingList addShoppingList(int customerId) {
+        Customer customer = customerService.findCustomer(customerId);
+        ShoppingList shoppingList = shoppingListRepository.save(new ShoppingList(new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())));
         customer.addShoppingList(shoppingList);
         customerRepository.save(customer);
+
+        return shoppingList;
     }
 }

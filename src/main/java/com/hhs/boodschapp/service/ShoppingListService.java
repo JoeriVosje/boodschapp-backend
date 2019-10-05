@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ShoppingListService {
     List<ShoppingList> getShoppingLists(int customerId);
-    void addShoppingList(int customerId);
+    ShoppingList addShoppingList(int customerId);
 }
