@@ -9,6 +9,11 @@ de verschillende soorten technieken die gebruikt kunnen worden voor deze applica
 En welke soort database het beste geschikt is. De resultaten hiervan zijn te vinden in het 
 [vooronderzoek](vooronderzoek.md)
 
+## API endpoints
+
+De endpoints van deze applicatie zijn beschreven op [swaggerhub](https://app.swaggerhub.com/apis-docs/bbmanuputty/Groep_4_Iteratie_2/1.0.0)
+
+
 ## Tests
 
 De testen worden met Postman gedraaid.
