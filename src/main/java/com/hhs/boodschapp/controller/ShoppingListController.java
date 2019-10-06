@@ -1,6 +1,9 @@
 package com.hhs.boodschapp.controller;
 
+import com.hhs.boodschapp.exception.BoodschappErrorException;
+import com.hhs.boodschapp.model.entity.Product;
 import com.hhs.boodschapp.model.entity.ShoppingList;
+import com.hhs.boodschapp.model.entity.response.ShoppingListOverviewResponse;
 import com.hhs.boodschapp.model.entity.response.ShoppingListResponse;
 import com.hhs.boodschapp.service.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,8 +27,26 @@ public class ShoppingListController {
     }
 
     @GetMapping("/shoppingLists/{customerId}")
-    public List<ShoppingList> getShoppingLists(@PathVariable int customerId) {
-        return shoppingListService.getShoppingLists(customerId);
+    public ResponseEntity<List<ShoppingListOverviewResponse>> getShoppingLists(@PathVariable int customerId) {
+        List<ShoppingList> shoppingLists = shoppingListService.getShoppingLists(customerId);
+        List<ShoppingListOverviewResponse> response = new ArrayList<>();
+
+        for (ShoppingList shoppingList : shoppingLists) {
+            List<Product> products = shoppingList.getProducts();
+            if (!products.isEmpty()) {
+                for(Product product : products) {
+                    ShoppingListOverviewResponse overview = new ShoppingListOverviewResponse();
+                    overview.setShoppingListId(shoppingList.getId());
+                    overview.setTotalPrice(product.getProductAmount() * product.getProductPrice());
+                    response.add(overview);
+                }
+            } else {
+                throw new BoodschappErrorException("No products added to the shopping lists", HttpStatus.NOT_FOUND);
+            }
+
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/shoppingLists/{customerId}")
