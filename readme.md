@@ -21,7 +21,7 @@ De testen worden met Postman gedraaid.
 ## Deployment
 
 De applicatie draait op twee verschillende servers. Een voor de database en een voor de applicatie zelf.
- 
+De applicatie is te vinden via: https://boodschapp-backend-2.herokuapp.com/
 
 ## Built With
 
