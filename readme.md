@@ -7,7 +7,7 @@ Dit is het project voor de boodschapp-backend
 Om deze applicatie goed te kunnen draaien  hebben wij een kort onderzoek gedaan naar
 de verschillende soorten technieken die gebruikt kunnen worden voor deze applicatie.
 En welke soort database het beste geschikt is. De resultaten hiervan zijn te vinden in het 
-[vooronderzoek](vooronderzoek.md)
+[vooronderzoek](docs/vooronderzoek.md)
 
 ## API endpoints
 
