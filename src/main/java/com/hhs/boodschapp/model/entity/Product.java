@@ -1,6 +1,7 @@
 package com.hhs.boodschapp.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "product")
@@ -10,30 +11,25 @@ public class Product {
     @Column(name = "id")
     private int id;
 
+    @NotNull
     @Column(name = "product_name")
     private String productName;
 
+    @NotNull
     @Column(name = "product_amount")
     private int productAmount;
 
+    @NotNull
     @Column(name = "product_price")
     private double productPrice;
-
-    @Column(name = "shopping_list_position")
-    private int shoppingListPosition;
-
-    @Column(name = "checked")
-    private boolean checked;
 
     public Product() {
     }
 
-    public Product(String productName, int productAmount, double productPrice, int shoppingListPosition, boolean checked) {
+    public Product(String productName, int productAmount, double productPrice) {
         this.productName = productName;
         this.productAmount = productAmount;
         this.productPrice = productPrice;
-        this.shoppingListPosition = shoppingListPosition;
-        this.checked = checked;
     }
 
     public int getId() {
@@ -68,22 +64,6 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public int getShoppingListPosition() {
-        return shoppingListPosition;
-    }
-
-    public void setShoppingListPosition(int shoppingListPosition) {
-        this.shoppingListPosition = shoppingListPosition;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
-
     @Override
     public String toString() {
         return "Product{" +
@@ -91,8 +71,6 @@ public class Product {
                 ", productName='" + productName + '\'' +
                 ", productAmount='" + productAmount + '\'' +
                 ", productPrice=" + productPrice +
-                ", shoppingListPosition=" + shoppingListPosition +
-                ", checked=" + checked +
                 '}';
     }
 }

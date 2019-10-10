@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.hhs.boodschapp.service.PatchMappingService.set;
+
 @Service
 public class CustomerServiceImpl implements CustomerService{
     private CustomerRepository customerRepository;
@@ -56,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customer = findCustomer(customerId);
 
         for(String field: fields.keySet()){
-            set(customer, field, fields.get(field));
+            PatchMappingService.set(customer, field, fields.get(field));
         }
 
         customerRepository.save(customer);
@@ -66,20 +68,5 @@ public class CustomerServiceImpl implements CustomerService{
     public void deleteCustomer(int customerId) {
         findCustomer(customerId);
         customerRepository.deleteById(customerId);
-    }
-
-    private void set(Object object, String fieldName, Object fieldValue) {
-        Class<?> clazz = object.getClass();
-        while (clazz != null) {
-            try {
-                Field field = clazz.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                field.set(object, fieldValue);
-            } catch (NoSuchFieldException e) {
-                throw new BoodschappErrorException("Wrong field name entered.", HttpStatus.BAD_REQUEST);
-            } catch (Exception e) {
-                throw new BoodschappErrorException("Error occured", HttpStatus.BAD_REQUEST);
-            }
-        }
     }
 }

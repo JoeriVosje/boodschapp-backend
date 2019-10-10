@@ -30,6 +30,10 @@ public class ShoppingList {
         this.updatedAt = updatedAt;
     }
 
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
     public int getId() {
         return id;
     }

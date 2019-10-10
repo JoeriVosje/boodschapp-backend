@@ -2,16 +2,16 @@ package com.hhs.boodschapp.model.entity.response;
 
 import java.sql.Timestamp;
 
-public class ShoppingListResponse {
+public class ShoppingListAddedResponse {
     private String statusMessage;
     private int shoppingListId;
     private Timestamp createdAt;
 
-    public ShoppingListResponse(String statusMessage) {
+    public ShoppingListAddedResponse(String statusMessage) {
         this.statusMessage = statusMessage;
     }
 
-    public ShoppingListResponse(String statusMessage, int shoppingListId, Timestamp createdAt) {
+    public ShoppingListAddedResponse(String statusMessage, int shoppingListId, Timestamp createdAt) {
         this.statusMessage = statusMessage;
         this.shoppingListId = shoppingListId;
         this.createdAt = createdAt;

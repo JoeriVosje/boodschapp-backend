@@ -24,35 +24,13 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
-    public List<Product> findProducts() {
-        return productService.findProducts();
-    }
-
-    @PostMapping("/products")
-    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody Product product, BindingResult bindingResult) {
-        Product savedProduct = productService.addProduct(product, bindingResult);
+    @PostMapping("/products/{shoppingListId}")
+    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody Product product, @PathVariable int shoppingListId, BindingResult bindingResult) {
+        Product savedProduct = productService.addProduct(product, shoppingListId, bindingResult);
 
         ProductResponse response = new ProductResponse();
         response.setProductId(savedProduct.getId());
-        response.setStatusMessage("Customer is added");
+        response.setStatusMessage("Product is added");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @GetMapping("/products/{productId}")
-    public Product findProduct(@PathVariable int productId){
-        return productService.findProduct(productId);
-    }
-
-
-    @DeleteMapping("/products/{productId}")
-    public ResponseEntity<ProductResponse> deleteCustomer(@PathVariable int productId) {
-        productService.deleteProduct(productId);
-
-        ProductResponse response = new ProductResponse();
-        response.setProductId(productId);
-        response.setStatusMessage("Product is deleted");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
 }

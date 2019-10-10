@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingListServiceImpl implements ShoppingListService {
@@ -45,5 +46,21 @@ public class ShoppingListServiceImpl implements ShoppingListService {
         customerRepository.save(customer);
 
         return shoppingList;
+    }
+
+    @Override
+    public void deleteShoppingList(int shoppingListId) {
+        shoppingListRepository.delete(findShoppingList(shoppingListId));
+    }
+
+    @Override
+    public ShoppingList findShoppingList(int shoppingListId) {
+        Optional<ShoppingList> result = shoppingListRepository.findById(shoppingListId);
+
+        if (!result.isPresent()) {
+            throw new BoodschappErrorException("The shopping list with id: " + shoppingListId + " is not found.", HttpStatus.NOT_FOUND);
+        }
+
+        return result.get();
     }
 }
