@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,11 @@ public class CustomerController {
     @Autowired
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "Welcome to our backend!!!";
     }
 
     @GetMapping("/customers")

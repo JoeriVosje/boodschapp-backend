@@ -24,7 +24,7 @@ public class ShoppingListController {
         this.shoppingListService = shoppingListService;
     }
 
-    @GetMapping("/shoppingLists/{customerId}")
+    @GetMapping("customers/{customerId}/shoppingLists")
     public ResponseEntity<List<ShoppingListOverviewResponse>> getShoppingLists(@PathVariable int customerId) {
         List<ShoppingList> shoppingLists = shoppingListService.getShoppingLists(customerId);
         List<ShoppingListOverviewResponse> response = new ArrayList<>();
@@ -35,7 +35,6 @@ public class ShoppingListController {
             List<Product> products = shoppingList.getProducts();
             double totalPrice = 0;
 
-            if (!products.isEmpty()) {
 
                 for(Product product : products) {
 
@@ -44,16 +43,17 @@ public class ShoppingListController {
 
                 overview.setTotalPrice(totalPrice);
                 response.add(overview);
-            } else {
-                throw new BoodschappErrorException("No products added to the shopping lists", HttpStatus.NOT_FOUND);
-            }
+            // TENG: Dit is niet nodig want dan gaat het fout bij meerdere boodschappen waarvan er 1 leeg is.
+//            else {
+//                throw new BoodschappErrorException("No products added to the shopping lists", HttpStatus.NOT_FOUND);
+//            }
 
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/shoppingLists/{customerId}")
+    @PostMapping("customers/{customerId}/shoppingLists")
     public ResponseEntity<ShoppingListAddedResponse> addShoppingList(@PathVariable int customerId) {
         ShoppingList shoppingList = shoppingListService.addShoppingList(customerId);
 
@@ -61,7 +61,7 @@ public class ShoppingListController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/shoppingLists/{shoppingListId}")
+    @DeleteMapping("customers/{customerId}/shoppingLists{shoppingListId}")
     public ResponseEntity<ShoppingListDeletedResponse> deleteShoppingList(@PathVariable int shoppingListId) {
         shoppingListService.deleteShoppingList(shoppingListId);
 
