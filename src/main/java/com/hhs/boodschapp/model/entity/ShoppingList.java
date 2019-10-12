@@ -1,11 +1,18 @@
 package com.hhs.boodschapp.model.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "shopping_list")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ShoppingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +29,6 @@ public class ShoppingList {
     @JoinColumn(name = "shopping_list_id")
     private List<Product> products;
 
-    public ShoppingList() {
-    }
-
     public ShoppingList(Timestamp createdAt, Timestamp updatedAt) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -32,46 +36,5 @@ public class ShoppingList {
 
     public void addProduct(Product product) {
         this.products.add(product);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "ShoppingList{" +
-                "id=" + id +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

@@ -3,6 +3,7 @@ package com.hhs.boodschapp.controller;
 import com.hhs.boodschapp.model.entity.Customer;
 import com.hhs.boodschapp.model.entity.response.CustomerResponse;
 import com.hhs.boodschapp.service.CustomerService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,25 +15,17 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("customers")
+@AllArgsConstructor
 public class CustomerController {
     private CustomerService customerService;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping("/")
-    public String home() {
-        return "Welcome to our backend!!!";
-    }
-
-    @GetMapping("/customers")
+    @GetMapping
     public List<Customer> findCustomers() {
         return customerService.findCustomers();
     }
 
-    @PostMapping("/customers")
+    @PostMapping
     public ResponseEntity<CustomerResponse> addCustomer(@Valid @RequestBody Customer customer, BindingResult bindingResult) {
         Customer savedCustomer = customerService.addCustomer(customer, bindingResult);
 
@@ -40,13 +33,13 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("{customerId}")
     public Customer findCustomer(@PathVariable int customerId){
         return customerService.findCustomer(customerId);
     }
 
 
-    @PatchMapping("/customers/{customerId}")
+    @PatchMapping("{customerId}")
     public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable int customerId, @RequestBody Map<String, String> fields) {
         customerService.updateCustomer(customerId, fields);
 
@@ -54,7 +47,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/customers/{customerId}")
+    @DeleteMapping("{customerId}")
     public ResponseEntity<CustomerResponse> deleteCustomer(@PathVariable int customerId) {
         customerService.deleteCustomer(customerId);
 

@@ -3,6 +3,7 @@ package com.hhs.boodschapp.service;
 import com.hhs.boodschapp.exception.BoodschappErrorException;
 import com.hhs.boodschapp.model.entity.Customer;
 import com.hhs.boodschapp.model.repository.CustomerRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,9 @@ import java.util.Optional;
 import static com.hhs.boodschapp.service.PatchMappingService.set;
 
 @Service
+@AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService{
     private CustomerRepository customerRepository;
-
-    @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     @Override
     public List<Customer> findCustomers() {

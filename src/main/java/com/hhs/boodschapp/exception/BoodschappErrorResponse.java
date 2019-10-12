@@ -1,20 +1,10 @@
 package com.hhs.boodschapp.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public class BoodschappErrorResponse {
     private String statusMessage;
-
-    public BoodschappErrorResponse() {
-    }
-
-    public BoodschappErrorResponse(String statusMessage) {
-        this.statusMessage = statusMessage;
-    }
-
-    public String getStatusMessage() {
-        return statusMessage;
-    }
-
-    public void setStatusMessage(String statusMessage) {
-        this.statusMessage = statusMessage;
-    }
 }

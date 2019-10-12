@@ -5,7 +5,7 @@ import com.hhs.boodschapp.model.entity.Customer;
 import com.hhs.boodschapp.model.entity.ShoppingList;
 import com.hhs.boodschapp.model.repository.CustomerRepository;
 import com.hhs.boodschapp.model.repository.ShoppingListRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ShoppingListServiceImpl implements ShoppingListService {
     private CustomerRepository customerRepository;
     private CustomerService customerService;
     private ShoppingListRepository shoppingListRepository;
-
-    @Autowired
-    public ShoppingListServiceImpl(CustomerRepository customerRepository, CustomerService customerService, ShoppingListRepository shoppingListRepository) {
-        this.customerRepository = customerRepository;
-        this.customerService = customerService;
-        this.shoppingListRepository = shoppingListRepository;
-    }
 
     @Override
     public List<ShoppingList> getShoppingLists(int customerId) {
